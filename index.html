@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!-- 设置页面语言为中文 -->
+<html lang="zh-CN">
+
+<head>
+    <!-- 设置页面编码为utf8 -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 页面标题 -->
+    <title>java版我的世界纯净版服务器下载</title>
+    <!-- 引用bootstrap -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+
+    <!-- 自定义样式 -->
+    <style>
+        .card-body {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div class="container">
+            <div class="row mt-3">
+                <div class="col">
+                    <h1 class="text-center">java版我的世界纯净版服务器下载</h1>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body" id="release">
+                            <h5 class="card-title">正式版下载框</h5>
+                            <span v-for="version in versions">
+                                <div class="card-text border p-2" id="release" v-if="version.type === 'release'">
+                                    <!-- 加入外框的容器 -->
+                                    <p class="fs-5 text-muted">{{version.id}}</p>
+                                    <a class="btn btn-primary" @click="download(version.id)">下载</a>
+                                </div>
+                            </span>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body" id="snapshot">
+                            <h5 class="card-title">预览版下载框</h5>
+                            <span v-for="(version, key) in versions">
+                                <div class="card-text border p-2" id="snapshot" v-if="version.type === 'snapshot'">
+                                    <!-- 加入外框的容器 -->
+                                    <p class="fs-5 text-muted">{{version.id}}</p>
+                                    <a class="btn btn-primary" @click="toDownload(version.url)">下载</a>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入vue -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- 引入axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- 引入这个页面的js文件 -->
+    <script src="js/index.js"></script>
+
+</body>
+
+</html>
