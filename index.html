@@ -40,7 +40,7 @@
                                 <div class="card-text border p-2" id="release" v-if="version.type === 'release'">
                                     <!-- 加入外框的容器 -->
                                     <p class="fs-5 text-muted">{{version.id}}</p>
-                                    <a class="btn btn-primary" @click="download(version.id)">下载</a>
+                                    <a class="btn btn-primary" @click="download(version.url)">下载</a>
                                 </div>
                             </span>
 
