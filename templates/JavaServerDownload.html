@@ -44,7 +44,7 @@
                     <div class="card">
                         <div class="card-body" id="snapshot">
                             <h5 class="card-title">预览版下载框</h5>
-                            <div v-for="(version) in versions">
+                            <div v-for="version in versions">
                                 <div class="card-text border p-2" id="snapshot" v-if="version.type === 'snapshot'">
                                     <!-- 加入外框的容器 -->
                                     <p class="fs-5 text-muted">{{version.id}}</p>
@@ -63,7 +63,7 @@
     <!-- 引入axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- 引入本页面的js文件 -->
-    <script src="../js/index.js"></script>
+    <script src="../js/JavaServerDownload.js"></script>
 
 </body>
 
