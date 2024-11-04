@@ -29,13 +29,13 @@
                     <div class="card">
                         <div class="card-body" id="release">
                             <h5 class="card-title">正式版下载框</h5>
-                            <span v-for="version in versions">
+                            <div v-for="version in versions">
                                 <div class="card-text border p-2" id="release" v-if="version.type === 'release'">
                                     <!-- 加入外框的容器 -->
                                     <p class="fs-5 text-muted">{{version.id}}</p>
                                     <a class="btn btn-primary" @click="download(version.url)">下载</a>
                                 </div>
-                            </span>
+                            </div>
 
                         </div>
                     </div>
@@ -44,13 +44,13 @@
                     <div class="card">
                         <div class="card-body" id="snapshot">
                             <h5 class="card-title">预览版下载框</h5>
-                            <span v-for="(version) in versions">
+                            <div v-for="(version) in versions">
                                 <div class="card-text border p-2" id="snapshot" v-if="version.type === 'snapshot'">
                                     <!-- 加入外框的容器 -->
                                     <p class="fs-5 text-muted">{{version.id}}</p>
                                     <a class="btn btn-primary" @click="download(version.url)">下载</a>
                                 </div>
-                            </span>
+                            </div>
                         </div>
                     </div>
                 </div>
