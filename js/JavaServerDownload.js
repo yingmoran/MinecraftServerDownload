@@ -1,56 +1,99 @@
-const { createApp } = Vue;
-
-const app = createApp({
-    // 数据绑定
-    data() {
-        return {
-            // 版本数据
-            versions: null
-        };
-    },
-    // 方法绑定
-    methods: {
-        /**
-         * 获取java版版本库
-         * 
-         * @author 影
-         */
-        async getVersion() {
-            // 使用axios获取java版版本库
-            const response = await axios({
-                // 使用get请求json
-                method: "get",
-                // 请求的url
-                url: "https://launchermeta.mojang.com/mc/game/version_manifest.json"
-            });
-            // 获取返回的版本库
-            this.versions = response.data.versions;
-        },
-        /**
-         * 下载服务端
-         * 
-         * @param {*} url 本版本下的json
-         * 
-         * @author 影
-         */
-        async download(url) {
-            // 使用axios获取服务端下载地址
-            const response = await axios({
-                // 使用get请求json
-                method: "get",
-                // 请求的url
-                url: url
-            });
-            // 服务端下载地址
-            const serverUrl = response.data.downloads.server.url;
-            // 下载服务端
-            window.open(serverUrl);
-        }
-    },
-    // 页面加载时渲染
-    mounted() {
-        this.getVersion();
-    }
+/**
+ * 页面加载时加载
+ */
+$(function () {
+    getvVersions();
 });
 
-app.mount('#container');
+/**
+ * 获取java版版本库
+ */
+function getvVersions() {
+    $.ajax({
+        type: "get",
+        url: "https://launchermeta.mojang.com/mc/game/version_manifest.json",
+        success: function (versions) {
+            // 循环获取到的版本库
+            for (let i = 0; i < versions.versions.length; i++) {
+                // 当前版本信息
+                const version = versions.versions[i];
+
+                // 使用闭包或立即执行函数，确保异步请求时 `version` 保持独立作用域
+                (function (currentVersion) {
+                    $.ajax({
+                        type: "get",
+                        url: currentVersion.url,
+                        success: function (data) {
+                            // 判断版本类型
+                            if (currentVersion.type === "release") { // 正式版
+                                const release = $("#release");
+                                let str = "";
+                                str += "<div class='card-text border p-2'>";
+                                str += "<p class='fs-5 text-muted'>" + currentVersion.id + "</p>";
+                                // 如果 url 中包含服务器下载地址，则添加下载按钮
+                                if (hasServerUrl(data)) {
+                                    str += "<a class='btn btn-primary' onclick='downloadServer(\"" + data.downloads.server.url + "\")' > 纯净版 </a>";
+                                }
+                                str += "</div>";
+                                release.append(str);
+                            } else if (currentVersion.type === "snapshot") {
+                                const snapshot = $("#snapshot");
+                                let str = "";
+                                str += "<div class='card-text border p-2'>";
+                                str += "<p class='fs-5 text-muted'>" + currentVersion.id + "</p>";
+                                // 如果 url 中包含服务器下载地址，则添加下载按钮
+                                if (hasServerUrl(data)) {
+                                    str += "<a class='btn btn-primary' onclick='downloadServer(\"" + data.downloads.server.url + "\")' > 纯净版 </a>";
+                                }
+                                str += "</div>";
+                                snapshot.append(str);
+                            } else if (currentVersion.type === "old_alpha") {
+                                const oldAlpha = $("#old_alpha");
+                                let str = "";
+                                str += "<div class='card-text border p-2'>";
+                                str += "<p class='fs-5 text-muted'>" + currentVersion.id + "</p>";
+                                // 如果 url 中包含服务器下载地址，则添加下载按钮
+                                if (hasServerUrl(data)) {
+                                    str += "<a class='btn btn-primary' onclick='downloadServer(\"" + data.downloads.server.url + "\")' > 纯净版 </a>";
+                                }
+                                str += "</div>";
+                                oldAlpha.append(str);
+                            } else if (currentVersion.type === "old_beta") {
+                                const oldBeta = $("#old_beta");
+                                let str = "";
+                                str += "<div class='card-text border p-2'>";
+                                str += "<p class='fs-5 text-muted'>" + currentVersion.id + "</p>";
+                                // 如果 url 中包含服务器下载地址，则添加下载按钮
+                                if (hasServerUrl(data)) {
+                                    str += "<a class='btn btn-primary' onclick='downloadServer(\"" + data.downloads.server.url + "\")' > 纯净版 </a>";
+                                }
+                                str += "</div>";
+                                oldBeta.append(str);
+                            }
+                        }
+                    });
+                })(version);
+            }
+        },
+        error: function () {
+            alert("服务器异常, 请联系管理员");
+        }
+    });
+}
+
+/**
+ * 判断json路径中是否包含服务器下载地址
+ * @param json json字符串
+ * @returns {boolean} 是否存在这个地址
+ */
+function hasServerUrl(json) {
+    return json.downloads && json.downloads.server && json.downloads.server.url;
+}
+
+/**
+ * 下载服务端
+ * @param url 服务端下载地址
+ */
+function downloadServer(url) {
+    window.location.href = url;
+}
