@@ -85,7 +85,7 @@ function renderVersionCard(version, data) {
 
     // 如果版本包含服务器下载地址，则添加下载按钮
     if (hasServerUrl(data)) {
-        str += "<a class='btn btn-primary' onclick='downloadServer(\"" + data.downloads.server.url + "\")'> 纯净版 </a>";
+        str += "<a class='btn btn-primary btn-lg' onclick='downloadServer(\"" + data.downloads.server.url + "\")'> 纯净版 </a>";
     }
     str += "</div>";
 
